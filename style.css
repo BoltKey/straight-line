@@ -1,0 +1,15 @@
+body:hover {
+	cursor: Default;
+}
+
+::-moz-selection { /* firefox new ie? lol */
+    color: none;
+    background: none;
+	cursor: Default;
+}
+
+::selection {
+    color: none;
+    background: none;
+	cursor: Default;
+}
