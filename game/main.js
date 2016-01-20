@@ -4,14 +4,21 @@ var grid;
 var mouseDown;
 var lastmd;
 var currlvl;
+var wonLevels = [];
 var sounds = {};
 function main() {
 	canvas = $("#canvas")[0];
 	ctx = canvas.getContext('2d');
 	ctx.textAlign = "center";
-	
-	
 	createMenu();
+	wonLevels = JSON.parse(localStorage.getItem("wonLevels"));
+	if (wonLevels !== null) 
+		for (var i = 0; i < wonLevels.length; ++i) {
+			$("#levelButton" + wonLevels[i]).removeClass("button-primary button-highlight");
+			$("#levelButton" + wonLevels[i]).addClass("button-action");
+		}
+	else
+		wonLevels = [];
 	//sounds
 	sounds.move = [];
 	sounds.undo = [];
@@ -88,6 +95,9 @@ function newLevel(id) {
 function victory() {
 	$("#levelButton" + currlvl).removeClass("button-primary button-highlight");
 	$("#levelButton" + currlvl).addClass("button-action");
+	if (wonLevels.indexOf(currlvl) === -1)
+		wonLevels.push(currlvl);
+	localStorage.setItem("wonLevels", JSON.stringify(wonLevels));
 	sounds.victory.play();
 }
 function draw() {
