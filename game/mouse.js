@@ -4,9 +4,9 @@ function click() {
 	for (var i = 0; i < grid.goals.length; ++i) {
 		var g = grid.goals[i];
 		if (isMouseIn({x: grid.x + g.x * grid.w, y: grid.y + g.y * grid.w, w: grid.w}) && 
-			!(  i === grid.selectedGoal + 1 && 
-				Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) < 2 && 
-				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2
+			!(  i === grid.selectedGoal + 1 && (
+				Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) < 2 !== 
+				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2)
 			)){
 				grid.selectedGoal = i;
 				grid.goals[grid.selectedGoal].reset();
@@ -22,6 +22,13 @@ function drag() {
 	
 	if (grid.tiles.length > gridy && gridy >= 0 && grid.tiles[0].length > gridx && gridx >= 0) {
 		var g = grid.goals[grid.selectedGoal];
+		if (grid.selectedGoal > 0) {
+			var p = grid.goals[grid.selectedGoal - 1].pathPoints();
+			if (gridx === p[p.length - 2][0] && gridy === p[p.length - 2][1]) {
+				--grid.selectedGoal;
+				grid.goals[grid.selectedGoal].undo();
+			}
+		}
 		var xdiff = gridx - g.ends()[0];
 		var ydiff = gridy - g.ends()[1];
 		if (xdiff === 0) {
