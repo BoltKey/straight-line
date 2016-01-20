@@ -64,11 +64,20 @@ function getColorScale(scale) {
 	return "rgb(" + red + "," + green + ",0)";
 }
 function createMenu() {
-	for (var i = 0; i < levelData.length; ++i) {
+	var i;
+	for (i = 0; i < levelData.length; ++i) {
 		var a = $("<button id='levelButton" + i + "' type='button' class='button button-primary button-medium button-box' onclick='newLevel(" + i + ")'>" + i + "</button>")
 		a.css("position", "fixed");
 		a.css("left", 640 + 50 * (i % 5));
 		a.css("top", 20 + 50 * Math.floor(i / 5));
+		a.css("width", 40);
+		$("body").append(a);
+	}
+	for (var i = 3; i <= 15; i += 1) {
+		var a = $("<button id='randomButton0' type='button' class='button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>Random" + i + "</button>")
+		a.css("position", "fixed");
+		a.css("left", 640 + 50 * (i % 5));
+		a.css("top", 300 + 50 * Math.floor(i / 5));
 		a.css("width", 40);
 		$("body").append(a);
 	}
