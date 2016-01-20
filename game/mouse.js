@@ -3,11 +3,15 @@ var divPos;
 function click() {
 	for (var i = 0; i < grid.goals.length; ++i) {
 		var g = grid.goals[i];
-		if (isMouseIn({x: grid.x + g.x * grid.w, y: grid.y + g.y * grid.w, w: grid.w})){
-			grid.selectedGoal = i;
-			grid.goals[grid.selectedGoal].reset();
-			draw();
-			console.log("clicked on goal " + i);
+		if (isMouseIn({x: grid.x + g.x * grid.w, y: grid.y + g.y * grid.w, w: grid.w}) && 
+			!(  i === grid.selectedGoal + 1 && 
+				Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) < 2 && 
+				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2
+			)){
+				grid.selectedGoal = i;
+				grid.goals[grid.selectedGoal].reset();
+				draw();
+				console.log("clicked on goal " + i);
 		}
 	}
 	drag();

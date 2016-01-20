@@ -73,12 +73,29 @@ function createMenu() {
 		a.css("width", 40);
 		$("body").append(a);
 	}
-	for (var i = 3; i <= 15; i += 1) {
-		var a = $("<button id='randomButton0' type='button' class='button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>Random" + i + "</button>")
+	for (var i = 3; i <= 20; i += 1) {
+		var a = $("<button id='randomButton" + i + "' type='button' class='button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")
 		a.css("position", "fixed");
 		a.css("left", 640 + 50 * (i % 5));
 		a.css("top", 300 + 50 * Math.floor(i / 5));
 		a.css("width", 40);
 		$("body").append(a);
 	}
+	$("#randomButton3").removeClass("button-primary");
+	$("#randomButton3").addClass("button-highlight");
+	$("#randomButton7").removeClass("button-primary");
+	$("#randomButton7").addClass("button-highlight");
+	$("#randomButton8").removeClass("button-primary");
+	$("#randomButton8").addClass("button-highlight");
+	$("#randomButton11").removeClass("button-primary");
+	$("#randomButton11").addClass("button-highlight");
+	$("#randomButton12").removeClass("button-primary");
+	$("#randomButton12").addClass("button-highlight");
+	$("#randomButton15").removeClass("button-primary");
+	$("#randomButton15").addClass("button-highlight");
+	$("#randomButton16").removeClass("button-primary");
+	$("#randomButton16").addClass("button-highlight");
+	$("#randomButton19").removeClass("button-primary");
+	$("#randomButton19").addClass("button-highlight");
+	
 }

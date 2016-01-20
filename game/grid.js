@@ -12,7 +12,7 @@ function Grid(x, y, w, m, n, goals) {
 	}
 	this.goals = [];
 	for (var i = 0; i < goals.length; ++i) {
-		this.goals.push(new Goal(...goals[i], i + 1));
+		this.goals.push(new Goal(goals[i][0], goals[i][1], i + 1));
 	}
 	this.selectedGoal = 0;
 	this.draw = function() {
