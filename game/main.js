@@ -76,16 +76,22 @@ function createMenu() {
 	for (i = 0; i < levelData.length; ++i) {
 		var a = $("<button id='levelButton" + i + "' type='button' class='level-button button button-primary button-medium button-box' onclick='newLevel(" + i + ")'>" + i + "</button>")
 		a.css("position", "fixed");
-		a.css("left", 640 + 50 * (i % 5));
-		a.css("top", 20 + 50 * Math.floor(i / 5));
-		a.css("width", 40);
+		a.css("left", 640 + 40 * (i % 8));
+		a.css("top", 80 + 50 * Math.floor(i / 8));
+		a.css("width", 30);
+		a.css("padding", 2);
 		$("body").append(a);
 	}
-	for (var i = 3; i <= 20; i += 1) {
+	var a = $("<div><h3>Random generated levels<h3></div>");
+	a.css("position", "fixed");
+	a.css("left", 640);
+	a.css("top", 300);
+	$("body").append(a);
+	for (var i = 3; i <= 22; i += 1) {
 		var a = $("<button id='randomButton" + i + "' type='button' class='random-button button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")
 		a.css("position", "fixed");
-		a.css("left", 640 + 50 * (i % 5));
-		a.css("top", 300 + 50 * Math.floor(i / 5));
+		a.css("left", 640 + 50 * ((i + 2) % 5));
+		a.css("top", 300 + 50 * Math.floor((i + 2) / 5));
 		a.css("width", 40);
 		$("body").append(a);
 	}

@@ -2,6 +2,8 @@ function Grid(x, y, w, m, n, goals) {
 	this.x = x;
 	this.y = y;
 	this.w = w;
+	this.x = 310 - w * n / 2;
+	this.y = 310 - w * m / 2;
 	this.tiles = [];
 	for (var i = 0; i < m; ++i) {
 		var row = [];
@@ -71,13 +73,13 @@ function Goal(x, y, num) {
 			if (grid.selectedGoal === this.num - 1) {
 				ctx.fillStyle = "blue";  // selected
 				if (this.pathPoints().length > this.num + 1)
-					ctx.strokeStyle = "#ffaaaa";  // too long
+					ctx.strokeStyle = "#ff6666";  // too long
 				else
-					ctx.strokeStyle = "#888888";  // default
+					ctx.strokeStyle = "#666666";  // default
 			}
 			else {
 				if (this.pathPoints().length > this.num + 1)
-					ctx.strokeStyle = "#ffbbbb";  // too long
+					ctx.strokeStyle = "#ff9999";  // too long
 				else
 					ctx.strokeStyle = "#999999";  // default
 				if (grid.selectedGoal === this.num - 2)
