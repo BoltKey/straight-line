@@ -63,21 +63,41 @@ function Goal(x, y, num) {
 		ctx.lineWidth = w * 0.8;
 		if (this.solved()) {
 			ctx.strokeStyle = getColorScale(this.num / grid.goals.length);
-			ctx.fillStyle = "green";
+			ctx.fillStyle = getColorScale(this.num / grid.goals.length);
+			if (this.num === grid.goals.length)
+				ctx.fillStyle = "#00ff00";  // last
 		}
 		else {
-			ctx.strokeStyle = "gray";
-			if (grid.selectedGoal === this.num - 1)
-				ctx.fillStyle = "cyan";
-			else if (grid.selectedGoal === this.num - 2)
-				ctx.fillStyle = "#00ff00";
-			else
-				ctx.fillStyle = "#9999ff";
+			if (grid.selectedGoal === this.num - 1) {
+				ctx.fillStyle = "blue";  // selected
+				if (this.pathPoints().length > this.num + 1)
+					ctx.strokeStyle = "#ffaaaa";  // too long
+				else
+					ctx.strokeStyle = "#888888";  // default
+			}
+			else {
+				if (this.pathPoints().length > this.num + 1)
+					ctx.strokeStyle = "#ffbbbb";  // too long
+				else
+					ctx.strokeStyle = "#999999";  // default
+				if (grid.selectedGoal === this.num - 2)
+					ctx.fillStyle = "cyan";  // currgoal
+				else
+					ctx.fillStyle = "#9999ff";  // others
+			}
 		}
 		ctx.stroke();
-		ctx.fillRect(x + this.x * w, y + this.y * w, w - 2, w - 2);
+		ctx.beginPath();
+		ctx.rect(x + this.x * w, y + this.y * w, w - 2, w - 2);
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+		ctx.fill();
+		ctx.stroke();
+		
 		ctx.fillStyle = "black";
-		ctx.fillText((this.num === grid.goals.length ? "" : (Math.max(0, this.path.length - 1) + "/")) + this.num, x + (this.x + 0.5) * w, y + (this.y + 0.60) * w);
+		if (this.path.length > 0 && !this.solved())
+			ctx.fillText((Math.max(0, this.path.length) + "/") + this.num, x + ((this.solved() ? this.x : this.ends()[0]) + 0.5) * w, y + (this.ends()[1] + 0.60) * w);
+		ctx.fillText(this.num, x + (this.x + 0.5) * w, y + (this.y + 0.60) * w);
 	}
 	this.addDir = function(num) {
 		if (grid.goals.length !== this.num) {

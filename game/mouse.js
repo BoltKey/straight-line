@@ -8,12 +8,22 @@ function click() {
 				Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) < 2 !== 
 				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2)
 			)){
-				grid.selectedGoal = i;
-				grid.goals[grid.selectedGoal].reset();
-				draw();
+				goalOnclick(i, true);
 		}
 	}
+	for (var i = 0; i < grid.goals.length; ++i) {
+		var g = grid.goals[i].ends();
+		if (isMouseIn({x: grid.x + g[0] * grid.w, y: grid.y + g[1] * grid.w, w: grid.w})) 
+			goalOnclick(i, false);
+	}
 	drag();
+}
+
+function goalOnclick(num, start) {
+	grid.selectedGoal = num;
+	if (start)
+		grid.goals[grid.selectedGoal].reset();
+	draw();
 }
 
 function drag() {
@@ -24,10 +34,11 @@ function drag() {
 		var g = grid.goals[grid.selectedGoal];
 		if (grid.selectedGoal > 0) {
 			var p = grid.goals[grid.selectedGoal - 1].pathPoints();
-			if (gridx === p[p.length - 2][0] && gridy === p[p.length - 2][1]) {
-				--grid.selectedGoal;
-				grid.goals[grid.selectedGoal].undo();
-			}
+			if (p.length > 1)
+				if (gridx === p[p.length - 2][0] && gridy === p[p.length - 2][1]) {
+					--grid.selectedGoal;
+					grid.goals[grid.selectedGoal].undo();
+				}
 		}
 		var xdiff = gridx - g.ends()[0];
 		var ydiff = gridy - g.ends()[1];
