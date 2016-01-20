@@ -46,6 +46,37 @@ function main() {
 	draw();
 }
 function newLevel(id) {
+	$(".tut").remove();
+	switch(id) {
+		case 0:
+			var a = $("<div class='tut'><h3>Goal of the game is to create a line going from 1 through all the numbers in ascending order ending in the highest number.<h3></div>");
+			a.css("position", "fixed");
+			a.css("left", 30);
+			a.css("top", 20);
+			a.css("width", 500);
+			$("body").append(a);
+			a = $("<div class='tut'><h3>Drag mouse from a numbered tile to create a line. Start at the '1' tile, go through the '2' tile and end in the '3' tile.<h3></div>");
+			a.css("position", "fixed");
+			a.css("left", 40);
+			a.css("top", 500);
+			a.css("width", 500);
+			$("body").append(a);
+			break;
+		case 2:
+			var a = $("<div class='tut'><h3>Each line segment has to have the length of the tile it is going from.<h3></div>");
+			a.css("position", "fixed");
+			a.css("left", 30);
+			a.css("top", 20);
+			a.css("width", 500);
+			$("body").append(a);
+			a = $("<div class='tut'><h3>Don't worry, it gets clearer pretty soon.<h3></div>");
+			a.css("position", "fixed");
+			a.css("left", 40);
+			a.css("top", 500);
+			a.css("width", 500);
+			$("body").append(a);
+			break;
+	}
 	var temp = JSON.parse(JSON.stringify(levelData[id]));
 	grid = new Grid(10, 10, Math.min(600 / temp.y, 600 / temp.x), temp.y, temp.x, temp.goals);
 	draw();
@@ -86,6 +117,11 @@ function createMenu() {
 	a.css("position", "fixed");
 	a.css("left", 640);
 	a.css("top", 300);
+	$("body").append(a);
+	var a = $("<div><h3>Level selection<h3></div>");
+	a.css("position", "fixed");
+	a.css("left", 640);
+	a.css("top", 30);
 	$("body").append(a);
 	for (var i = 3; i <= 22; i += 1) {
 		var a = $("<button id='randomButton" + i + "' type='button' class='random-button button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")

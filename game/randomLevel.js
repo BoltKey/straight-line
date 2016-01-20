@@ -1,6 +1,7 @@
 var finalPath;
 var attempts;
 function randomLevel(maxNum) {
+	$(".tut").remove();
 	$(".random-button").removeClass("button-highlight");
 	$("#randomButton" + maxNum).addClass("button-highlight");
 	var x;
