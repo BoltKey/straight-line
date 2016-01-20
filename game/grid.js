@@ -72,7 +72,7 @@ function Goal(x, y, num) {
 			else if (grid.selectedGoal === this.num - 2)
 				ctx.fillStyle = "#00ff00";
 			else
-				ctx.fillStyle = "blue";
+				ctx.fillStyle = "#9999ff";
 		}
 		ctx.stroke();
 		ctx.fillRect(x + this.x * w, y + this.y * w, w - 2, w - 2);

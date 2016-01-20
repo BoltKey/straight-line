@@ -11,7 +11,6 @@ function click() {
 				grid.selectedGoal = i;
 				grid.goals[grid.selectedGoal].reset();
 				draw();
-				console.log("clicked on goal " + i);
 		}
 	}
 	drag();
@@ -23,7 +22,6 @@ function drag() {
 	
 	if (grid.tiles.length > gridy && gridy >= 0 && grid.tiles[0].length > gridx && gridx >= 0) {
 		var g = grid.goals[grid.selectedGoal];
-		console.log("dragging on " + gridx + ":" + gridy);
 		var xdiff = gridx - g.ends()[0];
 		var ydiff = gridy - g.ends()[1];
 		if (xdiff === 0) {

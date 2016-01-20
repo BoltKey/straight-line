@@ -1,7 +1,9 @@
+var finalPath;
+var attempts;
 function randomLevel(maxNum) {
 	var x;
 	var y;
-	var sizes = [[2, 3], [2, 5], [4, 4], [4, 6], [4, 7], [6, 6], [8, 6], [8, 7], [6, 11], [6, 13], [4, 23], [12, 9], [10, 12], [8, 17], [], [],  [10, 19], [14, 15]];
+	var sizes = [[2, 3], [2, 5], [3, 5], [3, 7], [4, 7], [6, 6], [5, 9], [5, 11], [6, 11], [6, 13], [7, 13], [7, 15], [8, 15], [8, 17], [9, 17], [9, 19],  [10, 19], [14, 15]];
 	x = sizes[maxNum - 3][0];
 	y = sizes[maxNum - 3][1];
 	var path = randomPath(x, y);
@@ -17,8 +19,10 @@ function randomLevel(maxNum) {
 }
 
 function randomPath(m, n) {
+	++attempts;
 	var vers = [];
 	var hors = [];
+	var start = [Math.floor(Math.random() * m), Math.floor(Math.random() * n)];
 	for (var i = 0; i < m + 1; ++i) {
 		var col = [];
 		for (var j = 0; j < n; ++j) {
@@ -38,10 +42,11 @@ function randomPath(m, n) {
 	var adjWalls;
 	var iterations = m * n;
 	var curr = 0;
+	var otherEnd = false;
 	while(curr < iterations) {
 		++curr;
 		adjWalls = countAdj(c[0], c[1], hors, vers);
-		for (var i = 0; i < 2 - adjWalls; ++i) {
+		for (var i = 0; i < 2 - adjWalls + (c[0] === start[0] && c[1] === start[1]); ++i) {
 			var verPoss;
 			if (c[0] === m - 1)
 				verPoss = false;
@@ -62,6 +67,13 @@ function randomPath(m, n) {
 				vers[c[0] + 1][c[1]] = 1;
 			else if (horPoss)
 				hors[c[1] + 1][c[0]] = 1;
+			else if (!otherEnd) {
+				if (hors[c[1] + 1][c[0]] === 0)
+					hors[c[1] + 1][c[0]] = 1;
+				else if (vers[c[0] + 1][c[1]] === 0)
+					vers[c[0] + 1][c[1]] = 1;
+				otherEnd = true;
+			}
 			else 
 				return randomPath(m, n); // try again
 		}
@@ -72,12 +84,14 @@ function randomPath(m, n) {
 			c[0] = 0
 		}
 	}
-	drawPath(hors, vers, canvas.width - 200, canvas.height - 200);
+	drawPath(hors, vers, canvas.width - 150, canvas.height - 150);
 	i = 0;
-	while (pathPoints(0, 0, hors, vers).length < m * n && i < 1000) {
-		var loop = pathPoints(0, 0, hors, vers);
+	var loop = pathPoints(start[0], start[1], hors, vers);
+	while (pathPoints(start[0], start[1], hors, vers).length < m * n) {
+		loop = pathPoints(start[0], start[1], hors, vers);
 		for (var j = 0; j < loop.length; ++j) {
 			var c = loop[j];
+			start = loop[loop.length - 1];
 			if (c[0] !== m - 1 && c[1] !== n - 1) {
 				if (vers[c[0] + 1][c[1]] && 
 					vers[c[0] + 1][c[1] + 1] && 
@@ -99,16 +113,20 @@ function randomPath(m, n) {
 						hors[c[1] + 1][c[0]] = 0; 
 						hors[c[1] + 1][c[0] + 1] = 0;
 				}
-				drawPath(hors, vers, canvas.width - 200, canvas.height - 200);
+				//drawPath(hors, vers, canvas.width - 150, canvas.height - 150);
 			}
 			loop = pathPoints(0, 0, hors, vers);
 		}
 		++i;
+		if (i > 20)
+			return randomPath(m, n);
 	}
 	
-	drawPath(hors, vers, canvas.width - 200, canvas.height - 200);
+	//drawPath(hors, vers, canvas.width - 150, canvas.height - 150);
 	//return [path];
-	return pathPoints(Math.floor(Math.random() * (m - 1)), Math.floor(Math.random() * (n - 1)), hors, vers);
+	start = loop[loop.length - 1];
+	finalPath = pathPoints(start[0], start[1], hors, vers);
+	return pathPoints(start[0], start[1], hors, vers);
 }
 
 function pathPoints(x, y, hors, vers) {
@@ -136,6 +154,10 @@ function pathPoints(x, y, hors, vers) {
 			lastc[0] = c[0]; 
 			lastc[1] = c[1];
 			c[0] += 1;
+		}
+		else {
+			wayPoints = [[x, y]].concat(wayPoints);
+			return wayPoints;
 		}
 		wayPoints.push([c[0], c[1]]);
 	} while (!(c[0] === x && c[1] === y))

@@ -81,21 +81,5 @@ function createMenu() {
 		a.css("width", 40);
 		$("body").append(a);
 	}
-	$("#randomButton3").removeClass("button-primary");
-	$("#randomButton3").addClass("button-highlight");
-	$("#randomButton7").removeClass("button-primary");
-	$("#randomButton7").addClass("button-highlight");
-	$("#randomButton8").removeClass("button-primary");
-	$("#randomButton8").addClass("button-highlight");
-	$("#randomButton11").removeClass("button-primary");
-	$("#randomButton11").addClass("button-highlight");
-	$("#randomButton12").removeClass("button-primary");
-	$("#randomButton12").addClass("button-highlight");
-	$("#randomButton15").removeClass("button-primary");
-	$("#randomButton15").addClass("button-highlight");
-	$("#randomButton16").removeClass("button-primary");
-	$("#randomButton16").addClass("button-highlight");
-	$("#randomButton19").removeClass("button-primary");
-	$("#randomButton19").addClass("button-highlight");
 	
 }
