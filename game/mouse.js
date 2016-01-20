@@ -9,12 +9,18 @@ function click() {
 				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2)
 			)){
 				goalOnclick(i, true);
-		}
+				return
+			}
 	}
 	for (var i = 0; i < grid.goals.length; ++i) {
-		var g = grid.goals[i].ends();
-		if (isMouseIn({x: grid.x + g[0] * grid.w, y: grid.y + g[1] * grid.w, w: grid.w})) 
-			goalOnclick(i, false);
+		var g = grid.goals[i].pathPoints();
+		for (var j = 0; j < g.length; ++j) {
+			if (isMouseIn({x: grid.x + g[j][0] * grid.w, y: grid.y + g[j][1] * grid.w, w: grid.w})) {
+				for (var k = 0; k < g.length - j; ++k)
+					grid.goals[i].undo(false);
+				goalOnclick(i, false);
+			}
+		}
 	}
 	drag();
 }

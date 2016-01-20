@@ -113,17 +113,13 @@ function randomPath(m, n) {
 						hors[c[1] + 1][c[0]] = 0; 
 						hors[c[1] + 1][c[0] + 1] = 0;
 				}
-				//drawPath(hors, vers, canvas.width - 150, canvas.height - 150);
 			}
 			loop = pathPoints(0, 0, hors, vers);
 		}
 		++i;
-		if (i > 20)
+		if (i > 50)
 			return randomPath(m, n);
 	}
-	
-	//drawPath(hors, vers, canvas.width - 150, canvas.height - 150);
-	//return [path];
 	start = loop[loop.length - 1];
 	finalPath = pathPoints(start[0], start[1], hors, vers);
 	return pathPoints(start[0], start[1], hors, vers);

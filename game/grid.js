@@ -109,7 +109,15 @@ function Goal(x, y, num) {
 				this.path.push(num);
 				if (this.solved()) {
 					grid.selectedGoal = this.num;
-					sounds.solved.play();
+					
+					for (var i = 0; i < grid.goals.length; ++i) {
+						if (!grid.goals[i].solved()) {
+							sounds.solved.play();
+							draw();
+							return
+						}
+					}
+					victory();
 				}
 				else
 					sounds.move[this.path.length % 5].play();
@@ -117,16 +125,14 @@ function Goal(x, y, num) {
 				
 			}
 		}
-		for (var i = 0; i < grid.goals.length; ++i) {
-			if (!grid.goals[i].solved())
-				return
-		}
-		victory();
+		
 	}
 	
-	this.undo = function() {
+	this.undo = function(sound) {
 		this.path.splice(this.path.length - 1, 1);
-		sounds.undo[this.path.length % 5].play();
+		if (typeof(sound) === 'undefined' || sound) {
+			sounds.undo[this.path.length % 5].play();
+		}
 		draw();
 	}
 	this.ends = function() {

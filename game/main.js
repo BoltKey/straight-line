@@ -20,6 +20,8 @@ function main() {
 		sounds.undo.push(new Audio("sounds/undo.wav"));
 	}
 	sounds.solved = new Audio("sounds/solved.wav");
+	sounds.victory = new Audio("sounds/victory.wav");
+	sounds.victory.volume = 0.5;
 	
 	//mouse
 	var offset = $("#canvas").offset();
@@ -50,6 +52,7 @@ function newLevel(id) {
 function victory() {
 	$("#levelButton" + currlvl).removeClass("button-primary");
 	$("#levelButton" + currlvl).addClass("button-action");
+	sounds.victory.play();
 }
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
