@@ -9,8 +9,8 @@ function main() {
 	canvas = $("#canvas")[0];
 	ctx = canvas.getContext('2d');
 	ctx.textAlign = "center";
-	newLevel(0);
-	draw();
+	
+	
 	createMenu();
 	//sounds
 	sounds.move = [];
@@ -42,15 +42,20 @@ function main() {
 		mouseDown = false;
 	}
 	document.onmousemove = function() { if(mouseDown) { drag() } };
+	newLevel(0);
+	draw();
 }
 function newLevel(id) {
 	var temp = JSON.parse(JSON.stringify(levelData[id]));
 	grid = new Grid(10, 10, Math.min(600 / temp.y, 600 / temp.x), temp.y, temp.x, temp.goals);
 	draw();
+	$(".level-button").removeClass("button-highlight");
+	$("#levelButton" + id).addClass("button-highlight");
+	
 	currlvl = id;
 }
 function victory() {
-	$("#levelButton" + currlvl).removeClass("button-primary");
+	$("#levelButton" + currlvl).removeClass("button-primary button-highlight");
 	$("#levelButton" + currlvl).addClass("button-action");
 	sounds.victory.play();
 }
@@ -69,7 +74,7 @@ function getColorScale(scale) {
 function createMenu() {
 	var i;
 	for (i = 0; i < levelData.length; ++i) {
-		var a = $("<button id='levelButton" + i + "' type='button' class='button button-primary button-medium button-box' onclick='newLevel(" + i + ")'>" + i + "</button>")
+		var a = $("<button id='levelButton" + i + "' type='button' class='level-button button button-primary button-medium button-box' onclick='newLevel(" + i + ")'>" + i + "</button>")
 		a.css("position", "fixed");
 		a.css("left", 640 + 50 * (i % 5));
 		a.css("top", 20 + 50 * Math.floor(i / 5));
@@ -77,7 +82,7 @@ function createMenu() {
 		$("body").append(a);
 	}
 	for (var i = 3; i <= 20; i += 1) {
-		var a = $("<button id='randomButton" + i + "' type='button' class='button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")
+		var a = $("<button id='randomButton" + i + "' type='button' class='random-button button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")
 		a.css("position", "fixed");
 		a.css("left", 640 + 50 * (i % 5));
 		a.css("top", 300 + 50 * Math.floor(i / 5));

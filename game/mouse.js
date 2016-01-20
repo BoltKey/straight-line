@@ -3,19 +3,17 @@ var divPos;
 function click() {
 	for (var i = 0; i < grid.goals.length; ++i) {
 		var g = grid.goals[i];
+		var near = (Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) === 1) !== 
+				(Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) === 1);
 		if (isMouseIn({x: grid.x + g.x * grid.w, y: grid.y + g.y * grid.w, w: grid.w}) && 
-			!(  i === grid.selectedGoal + 1 && (
-				Math.abs(grid.goals[grid.selectedGoal].ends()[0] - grid.goals[i].x) < 2 !== 
-				Math.abs(grid.goals[grid.selectedGoal].ends()[1] - grid.goals[i].y) < 2)
-			)){
+			!(  i === grid.selectedGoal + 1 && near)) {
 				goalOnclick(i, true);
 				return
 			}
-	}
-	for (var i = 0; i < grid.goals.length; ++i) {
 		var g = grid.goals[i].pathPoints();
 		for (var j = 0; j < g.length; ++j) {
-			if (isMouseIn({x: grid.x + g[j][0] * grid.w, y: grid.y + g[j][1] * grid.w, w: grid.w})) {
+			if (isMouseIn({x: grid.x + g[j][0] * grid.w, y: grid.y + g[j][1] * grid.w, w: grid.w}) && !near &&
+				!(grid.goals[i].solved() && j === g.length - 1)) {
 				for (var k = 0; k < g.length - j; ++k)
 					grid.goals[i].undo(false);
 				goalOnclick(i, false);

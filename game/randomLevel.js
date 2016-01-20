@@ -1,6 +1,8 @@
 var finalPath;
 var attempts;
 function randomLevel(maxNum) {
+	$(".random-button").removeClass("button-highlight");
+	$("#randomButton" + maxNum).addClass("button-highlight");
 	var x;
 	var y;
 	var sizes = [[2, 3], [2, 5], [3, 5], [3, 7], [4, 7], [6, 6], [5, 9], [5, 11], [6, 11], [6, 13], [7, 13], [7, 15], [8, 15], [8, 17], [9, 17], [9, 19],  [10, 19], [14, 15]];
