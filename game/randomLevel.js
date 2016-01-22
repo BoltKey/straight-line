@@ -1,12 +1,13 @@
 var finalPath;
 var attempts;
+var sizes = [[2, 3], [2, 5], [3, 5], [3, 7], [4, 7], [6, 6], [5, 9], [5, 11], [6, 11], [6, 13], [7, 13], [7, 15], [10, 12], [8, 17], [9, 17], [9, 19],  [10, 19], [14, 15], [11, 21], [11, 23]];
 function randomLevel(maxNum) {
 	$(".tut").remove();
 	$(".random-button").removeClass("button-highlight");
 	$("#randomButton" + maxNum).addClass("button-highlight");
 	var x;
 	var y;
-	var sizes = [[2, 3], [2, 5], [3, 5], [3, 7], [4, 7], [6, 6], [5, 9], [5, 11], [6, 11], [6, 13], [7, 13], [7, 15], [10, 12], [8, 17], [9, 17], [9, 19],  [10, 19], [14, 15], [11, 21], [11, 23]];
+	
 	x = sizes[maxNum - 3][0];
 	y = sizes[maxNum - 3][1];
 	var path = randomPath(x, y);
@@ -18,6 +19,7 @@ function randomLevel(maxNum) {
 		index += d++;
 	}
 	grid = new Grid(10, 10, Math.min(600 / y, 600 / x), y, x, goals);
+	currlvl = -1;
 	draw();
 }
 

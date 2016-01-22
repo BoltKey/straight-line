@@ -1,3 +1,4 @@
+
 <head>
 <meta charset="utf-8" />
 <title>Straight line</title>
@@ -7,13 +8,11 @@
 
 <link href="buttons.css" rel="stylesheet">
 <link href="style.css" rel="stylesheet">
-<?php 
-foreach (glob("game/*.js") as $filename)
-{
-    echo '<script type="text/javascript" src='.$filename.'></script>
-';
-} 
-?>
+<script type="text/javascript" src=game/grid.js></script>
+<script type="text/javascript" src=game/levels.js></script>
+<script type="text/javascript" src=game/main.js></script>
+<script type="text/javascript" src=game/mouse.js></script>
+<script type="text/javascript" src=game/randomLevel.js></script>
 <script> window.onload = main; </script>
 </head>
 <body style="margin: 0">

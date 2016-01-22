@@ -6,7 +6,13 @@ var lastmd;
 var currlvl;
 var wonLevels = [];
 var sounds = {};
+var kongregate;
 function main() {
+	// kong
+	kongregateAPI.loadAPI(onComplete);
+	function onComplete(){
+		kongregate = kongregateAPI.getAPI();
+	}
 	canvas = $("#canvas")[0];
 	ctx = canvas.getContext('2d');
 	ctx.textAlign = "center";
@@ -95,9 +101,13 @@ function newLevel(id) {
 function victory() {
 	$("#levelButton" + currlvl).removeClass("button-primary button-highlight");
 	$("#levelButton" + currlvl).addClass("button-action");
-	if (wonLevels.indexOf(currlvl) === -1)
-		wonLevels.push(currlvl);
-	localStorage.setItem("wonLevels", JSON.stringify(wonLevels));
+	if (currlvl > -1) {
+		if (wonLevels.indexOf(currlvl) === -1)
+			wonLevels.push(currlvl);
+		localStorage.setItem("wonLevels", JSON.stringify(wonLevels));
+		if (typeof(kongregate) !== 'undefined')
+			kongregate.stats.submit("levels", wonLevels.length);
+	}
 	sounds.victory.play();
 }
 function draw() {
@@ -123,23 +133,34 @@ function createMenu() {
 		a.css("padding", 2);
 		$("body").append(a);
 	}
-	var a = $("<div><h3>Random generated levels<h3></div>");
+	var a = $("<div><h3>Random level generator<h3></div>");
 	a.css("position", "fixed");
 	a.css("left", 640);
-	a.css("top", 300);
+	a.css("top", 320);
 	$("body").append(a);
-	var a = $("<div><h3>Level selection<h3></div>");
+	a = $("<div><h3>Level selection<h3></div>");
 	a.css("position", "fixed");
 	a.css("left", 640);
 	a.css("top", 30);
 	$("body").append(a);
-	for (var i = 3; i <= 22; i += 1) {
-		var a = $("<button id='randomButton" + i + "' type='button' class='random-button button button-primary button-medium button-box' onclick='randomLevel(" + i + ")'>R" + i + "</button>")
-		a.css("position", "fixed");
-		a.css("left", 640 + 50 * ((i + 2) % 5));
-		a.css("top", 300 + 50 * Math.floor((i + 2) / 5));
-		a.css("width", 40);
-		$("body").append(a);
-	}
-	
+	a = $("<input type='range' min=3 max=22 value=8 id='randomRange' oninput='changeRand()'></input>")
+	a.css("position", "fixed");
+	a.css("left", 640);
+	a.css("top", 370);
+	a.css("width", 200);
+	$("body").append(a);
+	a = $("<div><span id='randomDisplay'>Max number: 8</span><button id='goRandButton' onclick='goRand()' type='button' class='level-button button button-primary button-medium button-box'>Go!</button></div>")
+	a.css("position", "fixed");
+	a.css("left", 640);
+	a.css("top", 400);
+	a.css("width", 200);
+	$("body").append(a);
+}
+function changeRand() {
+	$("#randomDisplay").html("Max number: " + $("#randomRange").val());
+}
+
+function goRand() {
+	$(".level-button").removeClass("button-highlight");
+	randomLevel($("#randomRange").val());
 }
