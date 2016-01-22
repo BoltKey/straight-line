@@ -38,7 +38,7 @@ function main() {
 	
 	//mouse
 	var offset = $("#canvas").offset();
-	$(document).mousemove(function(e){
+	$(document).bind('mousemove', function(e){
     divPos = {
         x: e.pageX - offset.top,
         y: e.pageY - offset.left
@@ -54,6 +54,25 @@ function main() {
 	document.body.onmouseup = function() { 
 		mouseDown = false;
 	}
+	
+	// touch devices
+	$(document).bind('touchstart', function(e) {
+		divPos = {
+			x: e.pageX - offset.top,
+			y: e.pageY - offset.left
+		}
+		mouseDown = true;
+		click();
+	});
+	$(document).bind('touchmove', function(e){
+		e.preventDefault();
+		divPos = {
+			x: e.originalEvent.touches[0].pageX - offset.top,
+			y: e.originalEvent.touches[0].pageY - offset.left
+		};
+		
+		drag();
+	});
 	document.onmousemove = function() { if(mouseDown) { drag() } };
 	newLevel(0);
 	draw();
