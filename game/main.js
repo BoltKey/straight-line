@@ -18,12 +18,12 @@ function main() {
 	ctx.textAlign = "center";
 	createMenu();
 	wonLevels = JSON.parse(localStorage.getItem("wonLevels"));
-	if (wonLevels !== null) 
+	/*if (wonLevels !== null) 
 		for (var i = 0; i < wonLevels.length; ++i) {
 			$("#levelButton" + wonLevels[i]).removeClass("button-primary button-highlight");
 			$("#levelButton" + wonLevels[i]).addClass("button-action");
 		}
-	else
+	else*/
 		wonLevels = [];
 	//sounds
 	sounds.move = [];
@@ -39,10 +39,11 @@ function main() {
 	//mouse
 	var offset = $("#canvas").offset();
 	$(document).bind('mousemove', function(e){
-    divPos = {
-        x: e.pageX - offset.top,
-        y: e.pageY - offset.left
-		}
+        divPos = {
+            x: e.pageX - offset.left,
+            y: e.pageY - offset.top
+        }
+        if(mouseDown) { drag() }
 	})
 	lastDivPos = {x: 0, y: 0};
 	lastmd = 0;
@@ -57,9 +58,10 @@ function main() {
 	
 	// touch devices
 	$(document).bind('touchstart', function(e) {
+	    state("bind");
 		divPos = {
-			x: e.pageX - offset.top,
-			y: e.pageY - offset.left
+			x: e.originalEvent.touches[0].pageX - offset.left,
+			y: e.originalEvent.touches[0].pageY - offset.top
 		}
 		mouseDown = true;
 		click();
@@ -67,13 +69,14 @@ function main() {
 	$(document).bind('touchmove', function(e){
 		e.preventDefault();
 		divPos = {
-			x: e.originalEvent.touches[0].pageX - offset.top,
-			y: e.originalEvent.touches[0].pageY - offset.left
+			x: e.originalEvent.touches[0].pageX - offset.left,
+			y: e.originalEvent.touches[0].pageY - offset.top
 		};
-		
 		drag();
 	});
-	document.onmousemove = function() { if(mouseDown) { drag() } };
+	$(document).bind('touchend', function(e){
+		mouseDown = false;
+	})
 	newLevel(0);
 	draw();
 }
@@ -182,4 +185,10 @@ function changeRand() {
 function goRand() {
 	$(".level-button").removeClass("button-highlight");
 	randomLevel($("#randomRange").val());
+}
+
+Math.sign = function (a){
+    if (a>0) return 1;
+    if (a===0) return 0;
+    return -1;
 }
