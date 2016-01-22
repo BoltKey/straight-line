@@ -2,7 +2,7 @@
 <meta charset="utf-8" />
 <title>Straight line</title>
 <link rel="shortcut icon" href="/boltlogo.png">
-<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery-2.2.0.min.js"></script>
 <script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
 
 <link href="buttons.css" rel="stylesheet">
