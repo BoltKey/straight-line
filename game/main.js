@@ -78,6 +78,7 @@ function main() {
 		mouseDown = false;
 	})
 	newLevel(0);
+	frame();
 	draw();
 }
 function newLevel(id) {
@@ -132,7 +133,13 @@ function victory() {
 	}
 	sounds.victory.play();
 }
+function frame() {
+	requestAnimationFrame(frame);
+	grid.frame();
+	draw();
+}
 function draw() {
+	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	grid.draw();
 }
