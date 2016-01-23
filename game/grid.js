@@ -61,6 +61,7 @@ function roundedRect(x, y, w, radius) {
 
 function Goal(x, y, num) {
 	this.blob = 0;
+	this.maxBlob = 20;
 	this.effect = 0;
 	this.maxEffect = 5;
 	this.x = x;
@@ -71,7 +72,7 @@ function Goal(x, y, num) {
 	// 0 right, 1 down, 2 left, 3 up
 	this.frame = function() {
 		this.effect -= Math.sign(this.effect);
-		--this.blob;
+		this.blob -= Math.sign(this.blob);
 	}
 	this.draw = function(x, y, w) {
 		var wid = 0.7;
@@ -128,7 +129,8 @@ function Goal(x, y, num) {
 					}
 				}
 				ctx.stroke();
-				roundedRect(x + this.x * w + 10, y + this.y * w + 10, w, w / 20);
+				var more = -( (Math.abs(this.blob - this.maxBlob / 2) - this.maxBlob / 2) * w * 0.003);
+				roundedRect(x + this.x * w + 10 - more, y + this.y * w + 10 - more, w + more * 2, w / 20);
 				//ctx.stroke();
 			}
 			else {
@@ -157,9 +159,13 @@ function Goal(x, y, num) {
 					for (var i = 0; i < grid.goals.length; ++i) {
 						if (!grid.goals[i].solved()) {
 							sounds.solved.play();
+							grid.goals[this.num].blob = this.maxBlob;
 							draw();
 							return
 						}
+					}
+					for (var i = 0; i < grid.goals.length; ++i) {
+						grid.goals[i].blob = this.maxBlob;
 					}
 					victory();
 				}

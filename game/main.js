@@ -17,13 +17,13 @@ function main() {
 	ctx = canvas.getContext('2d');
 	ctx.textAlign = "center";
 	createMenu();
-	/*wonLevels = JSON.parse(localStorage.getItem("wonLevels"));
+	wonLevels = JSON.parse(localStorage.getItem("wonLevels"));
 	if (wonLevels !== null) 
 		for (var i = 0; i < wonLevels.length; ++i) {
 			$("#levelButton" + wonLevels[i]).removeClass("button-primary button-highlight");
 			$("#levelButton" + wonLevels[i]).addClass("button-action");
 		}
-	else*/
+	else
 		wonLevels = [];
 	//sounds
 	sounds.move = [];

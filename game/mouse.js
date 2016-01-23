@@ -33,8 +33,8 @@ function goalOnclick(num, start) {
 }
 
 function drag() {
-	var gridx = Math.floor((divPos.x - grid.x) / grid.w);
-	var gridy = Math.floor((divPos.y - grid.y) / grid.w);
+	var gridx = Math.floor((divPos.x - grid.x - 10) / (grid.w));
+	var gridy = Math.floor((divPos.y - grid.y - 10) / (grid.w));
 	
 	if (grid.tiles.length > gridy && gridy >= 0 && grid.tiles[0].length > gridx && gridx >= 0) {
 		var g = grid.goals[grid.selectedGoal];
